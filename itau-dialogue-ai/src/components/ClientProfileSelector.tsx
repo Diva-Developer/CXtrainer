@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { User, Clock, Shield, Frown, ThumbsUp } from "lucide-react";
 
 interface ClientProfile {
@@ -7,6 +13,7 @@ interface ClientProfile {
   description: string;
   icon: React.ReactNode;
   difficulty: "Fácil" | "Médio" | "Difícil";
+  image: string; // <-- Novo campo
 }
 
 interface ClientProfileSelectorProps {
@@ -17,37 +24,50 @@ interface ClientProfileSelectorProps {
 const profiles: ClientProfile[] = [
   {
     name: "Cliente Impaciente",
-    description: "Cliente com pressa, direto ao ponto e um pouco ríspido. Bom para treinar agilidade.",
+    description:
+      "Cliente com pressa, direto ao ponto e um pouco ríspido. Bom para treinar agilidade.",
     icon: <Clock className="h-5 w-5" />,
     difficulty: "Médio",
+    image: "/Icons/impaciente.ico", // substitua pelo caminho real
   },
   {
     name: "Cliente Confuso",
-    description: "Não entende bem de tecnologia, precisa de explicações detalhadas e pacientes.",
+    description:
+      "Não entende bem de tecnologia, precisa de explicações detalhadas e pacientes.",
     icon: <User className="h-5 w-5" />,
     difficulty: "Fácil",
+    image: "/Icons/confuso.png",
   },
   {
     name: "Cliente Desconfiado",
-    description: "Cético em relação a ofertas, questiona tudo. Excelente para treinar argumentação.",
+    description:
+      "Cético em relação a ofertas, questiona tudo. Excelente para treinar argumentação.",
     icon: <Shield className="h-5 w-5" />,
     difficulty: "Difícil",
+    image: "/Icons/desconfiado.png",
   },
   {
     name: "Cliente Insatisfeito",
-    description: "Frustrado com problemas anteriores, expressa insatisfação claramente.",
+    description:
+      "Frustrado com problemas anteriores, expressa insatisfação claramente.",
     icon: <Frown className="h-5 w-5" />,
     difficulty: "Difícil",
+    image: "/Icons/insatisfeito.png",
   },
   {
     name: "Cliente Receptivo",
-    description: "Aberto a propostas mas cauteloso, faz perguntas inteligentes.",
+    description:
+      "Aberto a propostas mas cauteloso, faz perguntas inteligentes.",
     icon: <ThumbsUp className="h-5 w-5" />,
     difficulty: "Médio",
+    image: "/Icons/receptivel.png",
   },
 ];
 
-const ClientProfileSelector = ({ onSelectProfile, isLoading }: ClientProfileSelectorProps) => {
+const ClientProfileSelector = ({
+  onSelectProfile,
+  isLoading,
+}: ClientProfileSelectorProps) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "Fácil":
@@ -79,8 +99,16 @@ const ClientProfileSelector = ({ onSelectProfile, isLoading }: ClientProfileSele
             className="hover:shadow-lg transition-shadow cursor-pointer group"
             onClick={() => !isLoading && onSelectProfile(index)}
           >
-            <CardHeader>
-              <div className="flex items-start justify-between">
+            <CardHeader className="flex flex-row gap-4 items-start">
+              {/* 📸 Imagem à esquerda */}
+              <img
+                src={profile.image}
+                alt={profile.name}
+                className="w-24 h-24 rounded-xl object-cover border border-muted"
+              />
+
+              {/* 📄 Conteúdo à direita */}
+              <div className="flex flex-col justify-between flex-1">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     {profile.icon}
@@ -96,31 +124,35 @@ const ClientProfileSelector = ({ onSelectProfile, isLoading }: ClientProfileSele
                     </span>
                   </div>
                 </div>
+                <CardDescription className="mt-2">
+                  {profile.description}
+                </CardDescription>
               </div>
-              <CardDescription className="mt-2">{profile.description}</CardDescription>
             </CardHeader>
           </Card>
         ))}
 
+        {/* Cliente aleatório */}
         <Card
           className="hover:shadow-lg transition-shadow cursor-pointer group border-dashed"
           onClick={() => !isLoading && onSelectProfile()}
         >
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-muted text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                <User className="h-5 w-5" />
-              </div>
-              <CardTitle className="text-lg">Cliente Aleatório</CardTitle>
+          <CardHeader className="flex flex-row gap-4 items-start">
+            <div className="w-24 h-24 rounded-xl bg-muted flex items-center justify-center text-muted-foreground">
+              <User className="h-10 w-10" />
             </div>
-            <CardDescription className="mt-2">
-              Deixe o sistema escolher um perfil aleatório para você. Perfeito para treinamento
-              variado!
-            </CardDescription>
+            <div>
+              <CardTitle className="text-lg">Cliente Aleatório</CardTitle>
+              <CardDescription className="mt-2">
+                Deixe o sistema escolher um perfil aleatório para você. Perfeito
+                para treinamento variado!
+              </CardDescription>
+            </div>
           </CardHeader>
         </Card>
       </div>
 
+      {/* Card explicativo */}
       <Card className="bg-muted/50">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
@@ -130,40 +162,16 @@ const ClientProfileSelector = ({ onSelectProfile, isLoading }: ClientProfileSele
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-muted-foreground">
           <div className="flex gap-3">
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-              1
-            </div>
-            <p>
-              <strong className="text-foreground">O cliente (IA)</strong> inicia a conversa com um
-              problema real
-            </p>
+            <Step num={1} text="O cliente (IA) inicia a conversa com um problema real" />
           </div>
           <div className="flex gap-3">
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
-              2
-            </div>
-            <p>
-              <strong className="text-foreground">Você atende</strong> e tenta resolver o problema
-              do cliente
-            </p>
+            <Step num={2} text="Você atende e tenta resolver o problema do cliente" />
           </div>
           <div className="flex gap-3">
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground text-xs font-bold">
-              3
-            </div>
-            <p>
-              <strong className="text-foreground">Use o botão "Ofertar"</strong> (ícone de tag) para
-              fazer uma oferta de produto ao cliente
-            </p>
+            <Step num={3} text='Use o botão "Ofertar" (ícone de tag) para fazer uma oferta de produto ao cliente' />
           </div>
           <div className="flex gap-3">
-            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground text-xs font-bold">
-              4
-            </div>
-            <p>
-              <strong className="text-foreground">Treine contra-argumentação:</strong> O cliente
-              provavelmente recusará a primeira oferta. Argumente melhor!
-            </p>
+            <Step num={4} text="Treine contra-argumentação: o cliente provavelmente recusará a primeira oferta. Argumente melhor!" />
           </div>
         </CardContent>
       </Card>
@@ -171,9 +179,20 @@ const ClientProfileSelector = ({ onSelectProfile, isLoading }: ClientProfileSele
   );
 };
 
+const Step = ({ num, text }: { num: number; text: string }) => (
+  <>
+    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">
+      {num}
+    </div>
+    <p>
+      <strong className="text-foreground">{text}</strong>
+    </p>
+  </>
+);
+
 const Tag = ({ className }: { className?: string }) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns=""
     width="24"
     height="24"
     viewBox="0 0 24 24"
