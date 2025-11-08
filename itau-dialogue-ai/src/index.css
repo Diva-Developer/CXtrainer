@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Banco Itaú Color Palette */
+    --itau-orange: 25 100% 46%; /* #EC7000 */
+    --itau-blue: 206 100% 22%; /* #003D6F */
+    --itau-light-orange: 27 100% 94%; /* #FFF5E6 */
+    --itau-dark-blue: 206 100% 15%; /* #002647 */
+    
+    --background: 0 0% 100%;
+    --foreground: 206 100% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 206 100% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 206 100% 15%;
+
+    --primary: 25 100% 46%; /* Itaú Orange */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 206 100% 22%; /* Itaú Blue */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 27 100% 94%;
+    --muted-foreground: 206 50% 40%;
+
+    --accent: 25 100% 46%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 206 30% 90%;
+    --input: 206 30% 90%;
+    --ring: 25 100% 46%;
+
+    --radius: 0.75rem;
+
+    /* Chat specific colors */
+    --chat-user-bg: 25 100% 46%;
+    --chat-user-fg: 0 0% 100%;
+    --chat-ai-bg: 0 0% 96%;
+    --chat-ai-fg: 206 100% 15%;
+    --chat-header-bg: 206 100% 22%;
+    --chat-header-fg: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 206 100% 15%;
+    --foreground: 0 0% 98%;
+
+    --card: 206 100% 18%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 206 100% 18%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 25 100% 46%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 206 100% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 206 100% 20%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 25 100% 46%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 206 50% 25%;
+    --input: 206 50% 25%;
+    --ring: 25 100% 46%;
+
+    --chat-user-bg: 25 100% 46%;
+    --chat-user-fg: 0 0% 100%;
+    --chat-ai-bg: 206 100% 20%;
+    --chat-ai-fg: 0 0% 98%;
+    --chat-header-bg: 206 100% 22%;
+    --chat-header-fg: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
